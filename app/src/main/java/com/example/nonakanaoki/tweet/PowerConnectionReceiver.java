@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import twitter4j.AsyncTwitter;
@@ -20,7 +21,7 @@ public class PowerConnectionReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        Toast.makeText(context, "isCharging", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "充電開始", Toast.LENGTH_LONG).show();
 
         Keys keys = new Keys();
         AsyncTwitter twitter = new AsyncTwitterFactory().getInstance();
@@ -29,7 +30,8 @@ public class PowerConnectionReceiver extends BroadcastReceiver {
         twitter.setOAuthAccessToken(at);
 
         Date date = new Date();
-        String msg = date.toString() + "に充電が開始されたよ";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH時mm分ss秒");
+        String msg = sdf.format(date) + "に充電が開始されたよ";
         twitter.updateStatus(msg);
 
     }

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import twitter4j.AsyncTwitter;
@@ -15,9 +16,6 @@ import twitter4j.AsyncTwitterFactory;
 import twitter4j.auth.AccessToken;
 
 public class MainActivity extends ActionBarActivity {
-
-    private TextView textView;
-    private int counter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,20 +25,11 @@ public class MainActivity extends ActionBarActivity {
         //ボタンの設定
         Button button = (Button) findViewById(R.id.buttonA);
 
-        //TextViewの設定
-        textView = (TextView) findViewById(R.id.textViewA);
 
         //リスナーをボタンに登録
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                counter++;
-
-                if (counter % 2 == 0) {
-                    textView.setText("Hello");
-                } else {
-                    textView.setText("World");
-                }
 
                 {   //つぶやく処理ひとまとめ
                     Keys keys = new Keys();
@@ -50,7 +39,8 @@ public class MainActivity extends ActionBarActivity {
                     twitter.setOAuthAccessToken(at);
 
                     Date date = new Date();
-                    twitter.updateStatus(date.toString());
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH時mm分ss秒");
+                    twitter.updateStatus(sdf.format(date));
                 }
             }
         });
